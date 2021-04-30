@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pjatk.socialeventorganizer.SocialEventOrganizer.model.dto.Location;
+import pjatk.socialeventorganizer.SocialEventOrganizer.model.request.LocationDescriptionRequestForFilteringLocations;
 import pjatk.socialeventorganizer.SocialEventOrganizer.model.request.LocationRequest;
 import pjatk.socialeventorganizer.SocialEventOrganizer.model.response.LocationResponse;
 import pjatk.socialeventorganizer.SocialEventOrganizer.service.LocationService;
@@ -36,7 +37,6 @@ public class LocationController {
         return ResponseEntity.ok(service.findAll());
     }
 
-
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/add",
@@ -47,4 +47,15 @@ public class LocationController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @RequestMapping(
+            method = RequestMethod.POST,
+            value = "/description",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ImmutableList<Location>> findAllByDescription(@Valid @RequestBody LocationDescriptionRequestForFilteringLocations request) {
+        log.info("GET LOCATIONS BY DESCRIPTION");
+        return ResponseEntity.ok(service.findByLocationDescription(request));
+    }
+
+
 }

@@ -133,7 +133,7 @@ class CateringServiceTest extends Specification {
         service.addNewCatering(cateringRequest)
 
         then:
-        1 * mapper.mapToDTO(cateringRequest) >> catering
+        1 * mapper.updateMapToDTO(cateringRequest) >> catering
         1 * repository.save(catering)
 
     }
@@ -156,7 +156,7 @@ class CateringServiceTest extends Specification {
 
         then:
         1 * repository.existsById(1) >> true
-        1 * mapper.mapToDTO(cateringRequest, 1) >> catering
+        1 * mapper.updateMapToDTO(cateringRequest, 1) >> catering
         1 * repository.save(catering)
     }
 

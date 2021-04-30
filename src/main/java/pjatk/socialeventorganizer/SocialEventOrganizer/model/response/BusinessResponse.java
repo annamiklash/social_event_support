@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LocationResponse {
+public class BusinessResponse {
 
     private Long id;
 
-    private boolean servesFood;
+    private String email;
 }

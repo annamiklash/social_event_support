@@ -19,6 +19,9 @@ FIELDS NAMES AND TYPES  MUST MATCH THE KEY VALUES IN JSON BODY.
  */
 public class CateringRequest implements Serializable {
 
+    @NotNull
+    private AddressRequest addressRequest;
+
     @NotBlank(message = "Name is mandatory")
     @Size(min = 1, max = 100, message
             = "The name should be between 1 and 100 characters")
@@ -31,13 +34,11 @@ public class CateringRequest implements Serializable {
             = "Email should be between 5 and 100 characters")
     private String email;
 
-
     @NotBlank(message = "Phone number is mandatory")
     @Size(min = 9, max = 9, message
             = "phone number should be 9 characters long")
     @Pattern(regexp = RegexConstants.PHONE_NUMBER_REGEX, message = "should contain only digits")
     private String phoneNumber;
-
 
     @NotBlank(message = "If there no are service cost, please enter 0")
     @Pattern(regexp = RegexConstants.PRICE_REGEX, message = "should contain only digits or digits separated by a dot sign (1.23)")
@@ -48,7 +49,6 @@ public class CateringRequest implements Serializable {
     @NotNull
     @NumberFormat(style = NumberFormat.Style.NUMBER)
     private int businessId;
-
 
 }
 

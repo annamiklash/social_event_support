@@ -11,12 +11,15 @@ import pjatk.socialeventorganizer.SocialEventOrganizer.model.dto.Location;
 import pjatk.socialeventorganizer.SocialEventOrganizer.model.dto.LocationDescriptionItem;
 import pjatk.socialeventorganizer.SocialEventOrganizer.model.enums.LocationDescriptionItemEnum;
 import pjatk.socialeventorganizer.SocialEventOrganizer.model.request.AddressRequest;
+import pjatk.socialeventorganizer.SocialEventOrganizer.model.request.LocationDescriptionRequestForFilteringLocations;
 import pjatk.socialeventorganizer.SocialEventOrganizer.model.request.LocationRequest;
 import pjatk.socialeventorganizer.SocialEventOrganizer.model.response.AddressResponse;
 import pjatk.socialeventorganizer.SocialEventOrganizer.model.response.LocationResponse;
 import pjatk.socialeventorganizer.SocialEventOrganizer.repository.LocationRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Value
@@ -38,6 +41,25 @@ public class LocationService {
     public ImmutableList<Location> findAll() {
         final List<Location> locationList = (List<Location>) locationRepository.findAll();
         return ImmutableList.copyOf(locationList);
+    }
+
+
+    public ImmutableList<Location> findByLocationDescription(LocationDescriptionRequestForFilteringLocations request) {
+        final List<LocationDescriptionItemEnum> locationDescriptionList = request.getDescriptionItems();
+        final String[] locationStringList = locationDescriptionList.stream()
+                .map(LocationDescriptionItemEnum::getValue)
+                .toArray(String[]::new);
+        final List<Integer> locationIdList = locationRepository.findLocationsIdByDescription(locationStringList);
+
+        final List<Location> locationList = new ArrayList<>();
+
+        for (Integer integer : locationIdList) {
+            final Optional<Location> location = locationRepository.findById(Long.valueOf(integer));
+            location.ifPresent(locationList::add);
+        }
+
+        return ImmutableList.copyOf(locationList);
+
     }
 
     public LocationResponse addNewLocation(LocationRequest locationRequest) {

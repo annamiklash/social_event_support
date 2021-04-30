@@ -10,6 +10,5 @@ import java.util.Optional;
 @Repository
 public interface LocationImageRepository extends CrudRepository<LocationImage, Long> {
 
-
     Optional<List<LocationImage>> findAllByLocationId(long locationId);
 }

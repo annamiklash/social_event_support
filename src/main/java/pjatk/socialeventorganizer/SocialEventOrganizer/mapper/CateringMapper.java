@@ -15,7 +15,7 @@ import java.math.BigInteger;
 @Slf4j
 public class CateringMapper {
 
-    public Catering mapToDTO(CateringRequest request) {
+    public Catering mapToDTO(CateringRequest request, long addressId) {
 
         final String requestServiceCost = request.getServiceCost();
         log.info("COST STRING " + requestServiceCost);
@@ -36,10 +36,11 @@ public class CateringMapper {
                 .serviceCost(serviceCost)
                 .description(description)
                 .businessId(request.getBusinessId())
+                .addressId((int)addressId)
                 .build();
     }
 
-    public Catering mapToDTO(CateringRequest request, Long id) {
+    public Catering updateMapToDTO(CateringRequest request, Long id) {
         final String requestServiceCost = request.getServiceCost();
         final BigDecimal serviceCost = Converter.convertPriceString(requestServiceCost);
 

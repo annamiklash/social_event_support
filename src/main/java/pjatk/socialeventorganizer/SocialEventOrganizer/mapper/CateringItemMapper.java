@@ -18,7 +18,7 @@ public class CateringItemMapper {
                 .isVegetarian(request.isVegetarian())
                 .isGlutenFree(request.isGlutenFree())
                 .itemType(request.getType())
-                .id((long)request.getCateringId())
+                .cateringId(request.getCateringId())
                 .build();
     }
 
@@ -42,7 +42,7 @@ public class CateringItemMapper {
                 .isVegetarian(request.isVegetarian())
                 .isGlutenFree(request.isGlutenFree())
                 .itemType(request.getType())
-                .id((long)request.getCateringId())
+                .cateringId(request.getCateringId())
                 .build();
 
     }

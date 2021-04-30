@@ -1,6 +1,8 @@
 package pjatk.socialeventorganizer.SocialEventOrganizer.repository;
 
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pjatk.socialeventorganizer.SocialEventOrganizer.model.dto.Catering;
 
@@ -17,6 +19,9 @@ public interface CateringRepository extends CrudRepository<Catering, Long> {
 //    List<Catering> findByCityContaining(String city);
 
     List<Catering> findByNameContaining(String name);
+
+    @Query("SELECT id_address FROM catering where id_catering = :id")
+    long findCateringAddressId(@Param("id") long cateringId);
 
 
 }

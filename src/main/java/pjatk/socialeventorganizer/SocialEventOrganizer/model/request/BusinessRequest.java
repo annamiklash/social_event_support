@@ -4,30 +4,37 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.NumberFormat;
 import pjatk.socialeventorganizer.SocialEventOrganizer.common.RegexConstants;
-import pjatk.socialeventorganizer.SocialEventOrganizer.model.enums.LocationDescriptionItemEnum;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LocationRequest implements Serializable {
+public class BusinessRequest implements Serializable {
 
     @NotNull
     private AddressRequest addressRequest;
-    
-    List<LocationDescriptionItemEnum> locationDescription;
+
+    @NotBlank(message = "First name is mandatory")
+    @Size(min = 1, max = 30, message
+            = "The name should be between 1 and 30 characters")
+    @Pattern(regexp = RegexConstants.FIRST_NAME_REGEX)
+    private String firstName;
+
+    @NotBlank(message = "Last name is mandatory")
+    @Size(min = 1, max = 40, message
+            = "The name should be between 1 and 40 characters")
+    @Pattern(regexp = RegexConstants.LAST_NAME_REGEX)
+    private String lastName;
 
     @NotBlank(message = "Name is mandatory")
     @Size(min = 1, max = 100, message
             = "The name should be between 1 and 100 characters")
     @Pattern(regexp = RegexConstants.NAME_REGEX)
-    private String name;
+    private String businessName;
 
     @NotBlank(message = "Email is mandatory")
     @Email(message = "Email should be valid")
@@ -37,31 +44,24 @@ public class LocationRequest implements Serializable {
 
     @NotBlank(message = "Phone number is mandatory")
     @Size(min = 9, max = 9, message
-            = "phone number should be 9 characters long")
+            = "Phone number should be 9 characters long")
     @Pattern(regexp = RegexConstants.PHONE_NUMBER_REGEX, message = "should contain only digits")
     private String phoneNumber;
 
-    @NotNull
-    @NumberFormat(style = NumberFormat.Style.NUMBER)
-    private Integer seatingCapacity;
+    @NotBlank(message = "Password is mandatory")
+    @Size(min = 8, max = 100, message
+            = "Password number should be at least 8 characters long")
+    @Pattern(regexp = RegexConstants.PASSWORD_REGEX, message = "Password must contain at least one digit, " +
+            "one uppercase letter and a special character")
+    private String password;
 
     @NotNull
-    @NumberFormat(style = NumberFormat.Style.NUMBER)
-    private Integer standingCapacity;
-
-    private String description;
-
-    @NotBlank(message = "If there no are service cost, please enter 0")
-    @Pattern(regexp = RegexConstants.PRICE_REGEX, message = "should contain only digits or digits separated by a dot sign (1.23)")
-    private String dailyRentCost;
+    private boolean isService;
 
     @NotNull
-    @NumberFormat(style = NumberFormat.Style.NUMBER)
-    private Integer sizeSqMeters;
+    private boolean isLocation;
 
     @NotNull
-    @NumberFormat(style = NumberFormat.Style.NUMBER)
-    private Integer businessId;
-
+    private boolean isCatering;
 
 }

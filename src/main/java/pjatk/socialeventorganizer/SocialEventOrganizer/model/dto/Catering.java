@@ -2,6 +2,7 @@ package pjatk.socialeventorganizer.SocialEventOrganizer.model.dto;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
+@ToString
 /*
 NAMING AS IN DB (tables and attributes)
  or with annotation @Column("column_name)/@Table("table_name)
@@ -43,8 +45,12 @@ public class Catering implements Serializable {
     @Column("id_business")
     Integer businessId;
 
+    @ReadOnlyProperty
     @Column("id_address")
     Address address;
+
+    @Column("id_address")
+    Integer addressId;
 
     @MappedCollection(idColumn = "id_catering", keyColumn = "id_catering_item")
     Set<CateringItem> cateringItems = new HashSet<>();

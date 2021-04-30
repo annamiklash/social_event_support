@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pjatk.socialeventorganizer.SocialEventOrganizer.mapper.AddressMapper;
 import pjatk.socialeventorganizer.SocialEventOrganizer.model.dto.Address;
+import pjatk.socialeventorganizer.SocialEventOrganizer.model.exception.IllegalArgumentException;
 import pjatk.socialeventorganizer.SocialEventOrganizer.model.request.AddressRequest;
 import pjatk.socialeventorganizer.SocialEventOrganizer.model.response.AddressResponse;
 import pjatk.socialeventorganizer.SocialEventOrganizer.repository.AddressRepository;
@@ -36,5 +37,19 @@ public class AddressService {
 
         return mapper.mapToResponse(address);
 
+    }
+
+    public void deleteAddress(Long id) {
+        if (!addressWithIdExists(id)) {
+            throw new IllegalArgumentException("Address with ID " + id + " does not exist");
+        }
+
+        log.info("TRYING TO DELETE ADDRESS WITH ID " + id);
+        repository.deleteById(id);
+    }
+
+    private boolean addressWithIdExists(Long id) {
+        log.info("CHECKING IF ADDRESS WITH ID " + id + " EXISTS");
+        return repository.existsById(id);
     }
 }
